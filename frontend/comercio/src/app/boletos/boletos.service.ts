@@ -21,6 +21,10 @@ export class BoletosService {
     return this.http.get<Boleto>(this.url + id);
   }
 
+  async getById(id: number) : Promise<Boleto>{
+    return await this.http.get<Boleto>(this.url + id).toPromise()
+  }
+
   createBoleto(boleto: Boleto){
     this.http.post(this.url, boleto).subscribe();
   }

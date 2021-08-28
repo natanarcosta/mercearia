@@ -15,7 +15,7 @@ export class BoletoDetailComponent implements OnInit {
   boleto!: Boleto;
   form: FormGroup = new FormGroup({
     'empresa': new FormControl('', Validators.required),
-    'vencimento': new FormControl('', Validators.required),
+    'vencimento': new FormControl(null, Validators.required),
     'valor': new FormControl(null, [Validators.required,Validators.pattern(/^(?:[1-9]\d*|0)?(?:\.\d+)?$/)])
   })
   //editMode determina se o formulário que abrirá estará em branco (criar boleto) ou com dados para editar um boleto existente.
@@ -28,24 +28,21 @@ export class BoletoDetailComponent implements OnInit {
       (params: Params) => {
           this.id = +params['id'];
           this.editMode = params['id'] != null;
-          this.initForm();
       }
     )
-  }
-
-  private initForm(){
-     if(this.editMode){
-      this.boletosService.getBoletoById(this.id).subscribe((boleto) => {this.boleto = boleto, console.log(boleto)});
-      this.form.patchValue(this.boleto);
+    if(this.editMode){
+      this.boletosService.getBoletoById(this.id).subscribe((boleto) => {
+        this.boleto = boleto;
+        this.form.patchValue(this.boleto);
+      });
     }
   }
 
   onSubmit(){
-    const data = new Date(this.form.value['vencimento']);
     const newBoleto = new Boleto(
       0,
       this.form.value['empresa'],
-      data,
+      this.form.value['vencimento'],
       this.form.value['valor']
     )
     if(this.editMode){
@@ -54,11 +51,10 @@ export class BoletoDetailComponent implements OnInit {
     } else {
       this.boletosService.createBoleto(newBoleto);
     }
-    console.log('cheguei');
     this.router.navigate(['boletos']);
   }
 
   onCancel(){
-    this.router.navigate(['/boletos']);
+    this.router.navigate(['boletos']);
   }
 }

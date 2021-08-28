@@ -18,7 +18,9 @@ export class BoletosService{
     }
 
     getBoletos(){
-        return this.repoBoleto.find();
+        return this.repoBoleto.createQueryBuilder('boleto')
+        .orderBy('boleto.vencimento', 'ASC')
+        .getMany();
     }
 
     getBoletoById(id: number){
