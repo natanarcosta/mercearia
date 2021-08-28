@@ -25,7 +25,6 @@ export class BoletoListComponent implements OnInit, OnDestroy {
   constructor(private boletosService: BoletosService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-
     this.boletoSub = this.boletosService.boletoChanged.subscribe();
     //Se há o parametro /searched na url, retorna o item pesquisado.
     //TO-DO: Lidar com erros e resultados nulos
@@ -42,9 +41,8 @@ export class BoletoListComponent implements OnInit, OnDestroy {
       }
     });
 
-     this.boletoSub = this.boletosService.boletoChanged.subscribe((boletos: Boleto[]) => {
-      this.boletos = boletos;
-      console.log('BoletoChanged fired');
+    this.boletoSub = this.boletosService.boletoChanged.subscribe((boletos: Boleto[]) => {
+    this.boletos = boletos;
     });
 
   }
@@ -52,12 +50,12 @@ export class BoletoListComponent implements OnInit, OnDestroy {
     this.boletoSub.unsubscribe();
   }
   onSortByDate(){
-/*     this.boletosService.orderByDate(this.isAscSort.date);
-    this.isAscSort.date = !this.isAscSort.date; */
+    this.boletos = this.boletosService.orderByDate(this.boletos, this.isAscSort.date);
+    this.isAscSort.date = !this.isAscSort.date;
   }
   onSortByValue(){
-/*     this.boletosService.orderByValue(this.isAscSort.value);
-    this.isAscSort.value = !this.isAscSort.value; */
+    this.boletos = this.boletosService.orderByValue(this.boletos, this.isAscSort.date);
+    this.isAscSort.date = !this.isAscSort.date;
   }
 
   /* togglePaid(){

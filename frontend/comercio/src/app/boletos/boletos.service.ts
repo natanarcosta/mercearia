@@ -13,7 +13,7 @@ export class BoletosService {
 
   constructor(private http: HttpClient) { }
 
-  getAllBoletos(){
+   getAllBoletos(){
     return this.http.get<Boleto[]>(this.url);
   }
 
@@ -53,17 +53,16 @@ export class BoletosService {
     //return this.boletos.filter((boleto) => !boleto.pago);
   }
 
-  orderByDate(ascendingOrder: boolean){
-    //const newBoletos = ascendingOrder ?
-    //this.boletos.sort((a,b) => a.dataVencimento > b.dataVencimento ? 1 : -1):
-    //this.boletos.sort((a,b) => a.dataVencimento < b.dataVencimento ? 1 : -1);
-
-    //return this.boletoChanged.next(newBoletos);
+  orderByDate(boletos: Boleto[], ascendingOrder: boolean){
+    const sortedBoletos = ascendingOrder ?
+    boletos.sort((a,b) => a.vencimento > b.vencimento ? 1 : -1):
+    boletos.sort((a,b) => a.vencimento < b.vencimento ? 1 : -1);
+    return sortedBoletos;
   }
-  orderByValue(ascendingOrder: boolean){
-    //const newBoletos = ascendingOrder ?
-    //this.boletos.sort((a,b) => a.valor > b.valor ? 1 : -1):
-    //this.boletos.sort((a,b) => a.valor < b.valor ? 1 : -1);
-    //return this.boletoChanged.next(newBoletos);
+  orderByValue(boletos: Boleto[], ascendingOrder: boolean){
+    const sortedBoletos = ascendingOrder ?
+    boletos.sort((a,b) => a.valor > b.valor ? 1 : -1):
+    boletos.sort((a,b) => a.valor < b.valor ? 1 : -1);
+    return sortedBoletos;
   }
 }

@@ -35,13 +35,13 @@ export class BoletoDetailComponent implements OnInit {
 
   private initForm(){
      if(this.editMode){
-      this.boletosService.getBoletoById(this.id).subscribe((boleto) => {this.boleto = boleto});
+      this.boletosService.getBoletoById(this.id).subscribe((boleto) => {this.boleto = boleto, console.log(boleto)});
       this.form.patchValue(this.boleto);
     }
   }
 
   onSubmit(){
-    const data = new Date(this.form.value['data']);
+    const data = new Date(this.form.value['vencimento']);
     const newBoleto = new Boleto(
       0,
       this.form.value['empresa'],
@@ -54,7 +54,8 @@ export class BoletoDetailComponent implements OnInit {
     } else {
       this.boletosService.createBoleto(newBoleto);
     }
-    this.router.navigate(['/boletos']);
+    console.log('cheguei');
+    this.router.navigate(['boletos']);
   }
 
   onCancel(){
