@@ -1,0 +1,47 @@
+<div class="container px-4 px-lg-5 mt-5">
+  <div class="row justify-content-center">
+    <button class="btn btn-success me-1 col-3 col-xl-1"
+      type="button"
+      routerLink="new">Novo Boleto
+    </button>
+
+<!--   <button
+    [ngClass]="{'btn-primary' : showPaid, 'btn-secondary' : !showPaid}"
+    class="btn me-1 col-3 col-xl-1"
+    type="button"
+    (click)="togglePaid()">
+    {{ showPaid ? 'Ocultar' : 'Mostrar'}} Pagos
+  </button> -->
+
+    <button
+      class="btn btn-secondary me-1 col-3 col-xl-1"
+      type="button"
+      id="dropdownMenuButton1"
+      data-bs-toggle="dropdown"
+      aria-expanded="false">
+        Ordenar
+    </button>
+    <ul class="dropdown-menu col-1" aria-labelledby="dropdownMenuButton1">
+      <li><a class="dropdown-item" style="cursor: pointer;" (click)="onSortByDate()">Por Data {{isAscSort.date ? '▲' : '▼'}}</a></li>
+      <li><a class="dropdown-item" style="cursor: pointer;" (click)="onSortByValue()">Por Valor {{isAscSort.value ? '▲' : '▼'}}</a></li>
+    </ul>
+  </div>
+
+
+    <hr>
+    <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-3 row-cols-xl-3">
+        <app-boleto-list-item
+        *ngFor="let _boleto of boletos; let i = index"w
+        [boleto]= '_boleto'
+        [index] = 'i'></app-boleto-list-item>
+    </div>
+</div>
+<!-- <nav aria-label="Page navigation example just">
+  <ul class="pagination justify-content-center">
+    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  </ul>
+</nav> -->

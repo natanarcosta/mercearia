@@ -1,0 +1,29 @@
+<div class="backdrop"></div>
+<div class="container">
+  <div class="col">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-floating">
+        <input type="text" class="form-control" formControlName="empresa" id="empresa" name="empresa">
+        <label for="empresa" >Empresa:</label>
+        <span class="help-block" *ngIf="form.get('empresa')?.errors?.required && form.get('empresa')?.touched"> Esse campo precisa ser preenchido!</span>
+      </div>
+      <hr>
+      <div class="form-floating">
+        <input type="date" class="form-control" formControlName="data">
+        <label for="data">Data de Vencimento:</label>
+        <span class="help-block" *ngIf="form.get('data')?.errors?.required && form.get('data')?.touched"> Esse campo precisa ser preenchido!</span>
+      </div>
+      <hr>
+        <div class="input-group form-floating">
+        <input type="number" class="form-control" formControlName="valor">
+        <label for="valor">Valor R$: </label>
+    </div>
+    <span class="help-block" *ngIf="form.get('valor')?.errors?.pattern && form.get('valor')?.touched"> O valor precisa ser maior que 0!</span>
+    <span class="help-block" *ngIf="form.get('valor')?.errors?.required && form.get('valor')?.touched"> Esse campo precisa ser preenchido!</span>
+    <hr>
+     <button class="btn btn-success" type="submit" [disabled]="!form.valid">{{editMode ? 'Salvar' : 'Cadastrar'}}</button>
+     <span>|</span>
+    <button class="btn btn-danger" type="button" (click)="onCancel()">Cancelar</button>
+    </form>
+  </div>
+</div>
