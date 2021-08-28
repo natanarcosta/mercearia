@@ -12,6 +12,7 @@ import { BoletosService } from '../boletos.service';
 export class BoletoListComponent implements OnInit, OnDestroy {
   boletos: Boleto[] = [];
   boletoSub!: Subscription;
+
   //Is Ascending Sorting, usado para poder alterar entre ordem crescente e decrescente
   isAscSort = {
     'date' : true,
@@ -24,25 +25,27 @@ export class BoletoListComponent implements OnInit, OnDestroy {
   constructor(private boletosService: BoletosService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.boletoSub = this.boletosService.boletoChanged.subscribe();
 
-    this.boletosService.getAllBoletos().subscribe(
-      (boletos: Boleto[]) => {
-        this.boletos = boletos;
-      }
-    )
+    this.boletoSub = this.boletosService.boletoChanged.subscribe();
     //Se há o parametro /searched na url, retorna o item pesquisado.
     //TO-DO: Lidar com erros e resultados nulos
     this.route.queryParams.subscribe((params: Params) => {
       if(this.route.snapshot.queryParamMap.has('searched')) {
-        let searchValue: string = this.route.snapshot.queryParams['searched']
-        //this.boletos = this.boletosService.search(searchValue);
+        let searchedTerm: string = this.route.snapshot.queryParams['searched']
+        this.boletos = this.boletosService.search(this.boletos, searchedTerm);
+      } else {
+        this.boletosService.getAllBoletos().subscribe(
+          (boletos: Boleto[]) => {
+            this.boletos = boletos;
+          }
+        )
       }
     });
 
-   /*  this.boletoSub = this.boletosService.boletoChanged.subscribe((boletos: Boleto[]) => {
+     this.boletoSub = this.boletosService.boletoChanged.subscribe((boletos: Boleto[]) => {
       this.boletos = boletos;
-    }); */
+      console.log('BoletoChanged fired');
+    });
 
   }
   ngOnDestroy(){

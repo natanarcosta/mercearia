@@ -8,29 +8,29 @@ import { map } from 'rxjs/operators'
   providedIn: 'root'
 })
 export class BoletosService {
-   boletoChanged = new Subject<Boleto[]>();
-
+  boletoChanged = new Subject<Boleto[]>();
+  url: string = 'http://localhost:3000/boletos/';
 
   constructor(private http: HttpClient) { }
 
   getAllBoletos(){
-    return this.http.get<Boleto[]>('http://localhost:3000/boletos');
+    return this.http.get<Boleto[]>(this.url);
   }
 
   getBoletoById(id: number){
-    return this.http.get<Boleto>('http://localhost:3000/boletos/' + id);
+    return this.http.get<Boleto>(this.url + id);
   }
 
   createBoleto(boleto: Boleto){
-    this.http.post('http://localhost:3000/boletos', boleto).subscribe();
+    this.http.post(this.url, boleto).subscribe();
   }
 
   deleteBoleto(id: number){
-    this.http.delete('http://localhost:3000/boletos/' + id).subscribe();
+    this.http.delete(this.url + id).subscribe();
   }
 
   updateBoleto(id: number, boleto: Boleto){
-   return this.http.patch('http://localhost:3000/boletos/' + id, boleto).subscribe();
+   return this.http.patch(this.url + id, boleto).subscribe();
   }
 
   setToPaid(id: number){
@@ -45,12 +45,8 @@ export class BoletosService {
     //return this.boletoChanged.next(this.boletos);
   }
 
-  generateNewId(){
-    //return this.boletos.length+1;
-  }
-
-  search(terms: string){
-   // return this.boletos.filter((boleto) => boleto.empresa.toLowerCase().includes(terms.toLowerCase()));
+  search(unfilteredBoletos: Boleto[], searchedTerm: string){
+    return unfilteredBoletos.filter((boleto) => boleto.empresa.toLowerCase().includes(searchedTerm.toLowerCase()));
   }
 
   togglePaid(showPaid: boolean){
