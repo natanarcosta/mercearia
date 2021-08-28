@@ -24,32 +24,37 @@ export class BoletoListComponent implements OnInit, OnDestroy {
   constructor(private boletosService: BoletosService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.boletoSub = this.boletosService.boletoChanged.subscribe();
+
+    this.boletosService.getAllBoletos().subscribe(
+      (boletos: Boleto[]) => {
+        this.boletos = boletos;
+      }
+    )
     //Se há o parametro /searched na url, retorna o item pesquisado.
     //TO-DO: Lidar com erros e resultados nulos
     this.route.queryParams.subscribe((params: Params) => {
       if(this.route.snapshot.queryParamMap.has('searched')) {
         let searchValue: string = this.route.snapshot.queryParams['searched']
-        this.boletos = this.boletosService.search(searchValue);
+        //this.boletos = this.boletosService.search(searchValue);
       }
     });
 
-    this.boletos = this.boletosService.getAllBoletos();
-
-    this.boletoSub = this.boletosService.boletoChanged.subscribe((boletos: Boleto[]) => {
+   /*  this.boletoSub = this.boletosService.boletoChanged.subscribe((boletos: Boleto[]) => {
       this.boletos = boletos;
-    });
+    }); */
 
   }
   ngOnDestroy(){
     this.boletoSub.unsubscribe();
   }
   onSortByDate(){
-    this.boletosService.orderByDate(this.isAscSort.date);
-    this.isAscSort.date = !this.isAscSort.date;
+/*     this.boletosService.orderByDate(this.isAscSort.date);
+    this.isAscSort.date = !this.isAscSort.date; */
   }
   onSortByValue(){
-    this.boletosService.orderByValue(this.isAscSort.value);
-    this.isAscSort.value = !this.isAscSort.value;
+/*     this.boletosService.orderByValue(this.isAscSort.value);
+    this.isAscSort.value = !this.isAscSort.value; */
   }
 
   /* togglePaid(){

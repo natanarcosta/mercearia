@@ -3,7 +3,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Boleto } from './entities/boleto.entity';
 import { BoletosController } from './boletos.controller';
 import { BoletosService } from './services/boletos.service';
-
 @Module({
   imports: [TypeOrmModule.forFeature([Boleto])],
   controllers: [BoletosController],

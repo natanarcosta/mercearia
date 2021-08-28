@@ -9,7 +9,7 @@
       </div>
       <hr>
       <div class="form-floating">
-        <input type="date" class="form-control" formControlName="data">
+        <input type="date" class="form-control" formControlName="vencimento">
         <label for="data">Data de Vencimento:</label>
         <span class="help-block" *ngIf="form.get('data')?.errors?.required && form.get('data')?.touched"> Esse campo precisa ser preenchido!</span>
       </div>

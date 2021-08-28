@@ -22,8 +22,8 @@ export class BoletosController {
     }
 
     @Post()
-    createBoleto(@Body() body: CreateBoletoDto){
-        return this.boletosService.createBoleto(body.empresa, body.vencimento, body.valor);
+    createBoleto(@Body() createBoletoDto: CreateBoletoDto){
+        return this.boletosService.createBoleto(createBoletoDto);
     }
 
     @Delete('/:id')

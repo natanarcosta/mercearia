@@ -13,7 +13,11 @@ import { BoletosService } from '../boletos.service';
 export class BoletoDetailComponent implements OnInit {
   id!: number;
   boleto!: Boleto;
-  form!: FormGroup;
+  form: FormGroup = new FormGroup({
+    'empresa': new FormControl('', Validators.required),
+    'vencimento': new FormControl('', Validators.required),
+    'valor': new FormControl(null, [Validators.required,Validators.pattern(/^(?:[1-9]\d*|0)?(?:\.\d+)?$/)])
+  })
   //editMode determina se o formulário que abrirá estará em branco (criar boleto) ou com dados para editar um boleto existente.
   editMode: boolean = true;
 
@@ -30,31 +34,19 @@ export class BoletoDetailComponent implements OnInit {
   }
 
   private initForm(){
-    let empresa = null;
-    let data = null;
-    let valor = null;
-
-    if(this.editMode){
-      this.boleto = this.boletosService.getBoletoById(this.id);
-      empresa = this.boleto.empresa;
-      data = this.boleto.dataVencimento;
-      valor = this.boleto.valor;
+     if(this.editMode){
+      this.boletosService.getBoletoById(this.id).subscribe((boleto) => {this.boleto = boleto});
+      this.form.patchValue(this.boleto);
     }
-
-    this.form = new FormGroup({
-      'empresa': new FormControl(empresa, Validators.required),
-      'data': new FormControl(data, Validators.required),
-      'valor': new FormControl(valor, [Validators.required, Validators.pattern(/^(?:[1-9]\d*|0)?(?:\.\d+)?$/)]) //RegEx para floats positivos
-     })
   }
 
   onSubmit(){
     const data = new Date(this.form.value['data']);
     const newBoleto = new Boleto(
-      this.editMode ? this.id : this.boletosService.generateNewId(),
+      0,
       this.form.value['empresa'],
       data,
-      this.form.value['valor'],
+      this.form.value['valor']
     )
     if(this.editMode){
       newBoleto.pago = this.boleto.pago;
@@ -64,6 +56,7 @@ export class BoletoDetailComponent implements OnInit {
     }
     this.router.navigate(['/boletos']);
   }
+
   onCancel(){
     this.router.navigate(['/boletos']);
   }

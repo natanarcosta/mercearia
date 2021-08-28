@@ -1,19 +1,5 @@
-import { IsBoolean, IsNumber, IsOptional, IsString } from "class-validator";
+import { PartialType } from "@nestjs/mapped-types";
+import { CreateBoletoDto } from "./create-boleto.dto";
+export class UpdateBoletoDto extends PartialType(CreateBoletoDto){
 
-export class UpdateBoletoDto{
-    @IsString()
-    @IsOptional()
-    empresa: string;
-
-    @IsString()
-    @IsOptional()
-    vencimento: string;
-
-    @IsNumber()
-    @IsOptional()
-    valor: number;
-
-    @IsBoolean()
-    @IsOptional()
-    pago: boolean;
 }

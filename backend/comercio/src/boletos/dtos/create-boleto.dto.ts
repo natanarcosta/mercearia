@@ -1,7 +1,6 @@
-import { IsBoolean, IsNumber, IsString } from "class-validator";
-
-
+import { IsBoolean, IsDate, IsNumber, IsString } from "class-validator";
 export class CreateBoletoDto {
+
     @IsString()
     empresa: string;
 
@@ -12,5 +11,5 @@ export class CreateBoletoDto {
     valor: number;
 
     @IsBoolean()
-    pago = false;
+    pago: boolean;
 }

@@ -15,8 +15,7 @@ export class BoletoListItemComponent implements OnInit {
 
   constructor(private boletosService: BoletosService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onPay(id: number){
     if(!this.boleto.pago){
@@ -28,11 +27,5 @@ export class BoletoListItemComponent implements OnInit {
 
   onDelete(id: number){
     this.boletosService.deleteBoleto(id);
-  }
-
-  evaluateDate(){
-    //Usado apenas para dar cor vermelha ao text da data de vencimento caso o boleto esteja vencido
-    let today = new Date();
-    return this.boleto.dataVencimento < today;
   }
 }
