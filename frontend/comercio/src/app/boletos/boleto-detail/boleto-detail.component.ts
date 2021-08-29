@@ -26,11 +26,11 @@ export class BoletoDetailComponent implements OnInit {
   constructor(
     private boletosService: BoletosService,
     private matDialogRef: MatDialogRef<BoletoDetailComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: {id:number}
+    @Inject(MAT_DIALOG_DATA) private data: { id: number }
   ) {}
 
   ngOnInit(): void {
-    if(this.data?.id) {
+    if (this.data?.id) {
       this.editMode = true;
       this.boletosService.getBoletoById(this.data.id).subscribe((boleto) => {
         this.boleto = boleto;
@@ -53,9 +53,12 @@ export class BoletoDetailComponent implements OnInit {
     console.log(newBoleto);
     if (this.data?.id) {
       newBoleto.pago = this.boleto.pago;
-      this.boletosService.updateBoleto(this.data.id, newBoleto).subscribe(() => {this.matDialogRef.close(newBoleto)});
+      this.boletosService
+        .updateBoleto(this.data.id, newBoleto)
+        .subscribe(() => {
+          this.matDialogRef.close(newBoleto);
+        });
     } else {
-
       this.boletosService
         .createBoleto(newBoleto)
         .subscribe(() => this.matDialogRef.close());
@@ -66,7 +69,7 @@ export class BoletoDetailComponent implements OnInit {
     //Passando o boleto para não quebrar o .afterclosed subscribe em outro componente
     this.matDialogRef.close(this.boleto);
   }
-  useBarCode(){
+  useBarCode() {
     return;
   }
 }

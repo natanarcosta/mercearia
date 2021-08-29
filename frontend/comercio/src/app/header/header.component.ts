@@ -9,17 +9,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
   @ViewChild('search') searchForm!: NgForm;
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  onSearch(form: NgForm){
+  onSearch(form: NgForm) {
     let searchTerms = form.value.search;
-    if(!searchTerms){
+    if (!searchTerms) {
       return;
     }
     this.searchForm.reset();
-    this.router.navigate(['boletos'], {queryParams: { searched: searchTerms}})
+    this.router.navigate(['boletos'], {
+      queryParams: { searched: searchTerms },
+    });
   }
 }

@@ -5,7 +5,7 @@ export class Boleto {
   public valor: number;
   public pago: boolean;
 
-  constructor(id: number, empresa: string, data: Date, valor: number){
+  constructor(id: number, empresa: string, data: Date, valor: number) {
     this.id = id;
     this.empresa = empresa;
     this.vencimento = data;

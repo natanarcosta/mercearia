@@ -9,9 +9,9 @@ import { BoletosService } from '../boletos.service';
 @Component({
   selector: 'app-boleto-list',
   templateUrl: './boleto-list.component.html',
-  styleUrls: ['./boleto-list.component.css']
+  styleUrls: ['./boleto-list.component.css'],
 })
-export class BoletoListComponent implements OnInit, OnDestroy{
+export class BoletoListComponent implements OnInit, OnDestroy {
   boletos: Boleto[] = [];
   boletoSub!: Subscription;
   isLoading = false;
@@ -19,69 +19,89 @@ export class BoletoListComponent implements OnInit, OnDestroy{
 
   //Is Ascending Sorting, usado para poder alterar entre ordem crescente e decrescente
   isAscSort = {
-    'date' : true,
-    'value' : true,
-    'status' : true
-  }
+    date: true,
+    value: true,
+    status: true,
+  };
   //showPaid = true;
   editMode = false;
 
-  constructor(private boletosService: BoletosService, private route: ActivatedRoute, private matDialog: MatDialog) { }
+  constructor(
+    private boletosService: BoletosService,
+    private route: ActivatedRoute,
+    private matDialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.showPaid = true; //Trocando para true para mostrar o texto correto no botão mostrar/ocultar boletos pagos.
-    this.boletoSub = this.boletosService.boletoChanged.subscribe(() => {this.requestBoletos()});
+    this.boletoSub = this.boletosService.boletoChanged.subscribe(() => {
+      this.requestBoletos();
+    });
     //Se há o parametro /searched na url, retorna o item pesquisado.
     //TO-DO: Lidar com erros e resultados nulos
     this.route.queryParams.subscribe((params: Params) => {
-      if(this.route.snapshot.queryParamMap.has('searched')) {
-        const searchedTerm: string = this.route.snapshot.queryParams['searched']
+      if (this.route.snapshot.queryParamMap.has('searched')) {
+        const searchedTerm: string =
+          this.route.snapshot.queryParams['searched'];
         this.boletos = this.boletosService.search(this.boletos, searchedTerm);
       } else {
         this.requestBoletos();
       }
     });
-    this.boletoSub = this.boletosService.boletoChanged.subscribe((boletos: Boleto[]) => {
-    this.boletos = boletos;
-    });
-  }
-
-  ngOnDestroy(){
-    this.boletoSub.unsubscribe();
-  }
-
-  onSortByDate(){
-    this.boletos = this.boletosService.orderByDate(this.boletos, this.isAscSort.date);
-    this.isAscSort.date = !this.isAscSort.date;
-  }
-
-  onSortByValue(){
-    this.boletos = this.boletosService.orderByValue(this.boletos, this.isAscSort.date);
-    this.isAscSort.date = !this.isAscSort.date;
-  }
-
-  requestBoletos(){
-    this.isLoading = true;
-    this.boletosService.getAllBoletos().subscribe(
-      (boletos: Boleto[]) => {this.boletos = boletos, this.isLoading = false;}
+    this.boletoSub = this.boletosService.boletoChanged.subscribe(
+      (boletos: Boleto[]) => {
+        this.boletos = boletos;
+      }
     );
   }
 
-  openDialog(){
-    this.matDialog.open(BoletoDetailComponent).afterClosed().subscribe(() => {this.requestBoletos()});
+  ngOnDestroy() {
+    this.boletoSub.unsubscribe();
   }
 
-  toggleShowPaid(){
-    if(this.showPaid){
+  onSortByDate() {
+    this.boletos = this.boletosService.orderByDate(
+      this.boletos,
+      this.isAscSort.date
+    );
+    this.isAscSort.date = !this.isAscSort.date;
+  }
+
+  onSortByValue() {
+    this.boletos = this.boletosService.orderByValue(
+      this.boletos,
+      this.isAscSort.date
+    );
+    this.isAscSort.date = !this.isAscSort.date;
+  }
+
+  requestBoletos() {
+    this.isLoading = true;
+    this.boletosService.getAllBoletos().subscribe((boletos: Boleto[]) => {
+      (this.boletos = boletos), (this.isLoading = false);
+    });
+  }
+
+  openDialog() {
+    this.matDialog
+      .open(BoletoDetailComponent)
+      .afterClosed()
+      .subscribe(() => {
+        this.requestBoletos();
+      });
+  }
+
+  toggleShowPaid() {
+    if (this.showPaid) {
       this.isLoading = true;
-      this.boletosService.getAllIncPaid().subscribe(
-        (boletos: Boleto[]) => {this.boletos = boletos, this.isLoading = false}
-      );
+      this.boletosService.getAllIncPaid().subscribe((boletos: Boleto[]) => {
+        (this.boletos = boletos), (this.isLoading = false);
+      });
     } else {
       this.isLoading = true;
-      this.boletosService.getAllBoletos().subscribe(
-        (boletos: Boleto[]) => {this.boletos = boletos, this.isLoading = false}
-      );
+      this.boletosService.getAllBoletos().subscribe((boletos: Boleto[]) => {
+        (this.boletos = boletos), (this.isLoading = false);
+      });
     }
     this.showPaid = !this.showPaid;
   }

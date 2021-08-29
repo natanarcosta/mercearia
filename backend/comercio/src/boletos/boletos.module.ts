@@ -6,6 +6,6 @@ import { BoletosService } from './services/boletos.service';
 @Module({
   imports: [TypeOrmModule.forFeature([Boleto])],
   controllers: [BoletosController],
-  providers: [BoletosService]
+  providers: [BoletosService],
 })
 export class BoletosModule {}

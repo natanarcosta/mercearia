@@ -11,7 +11,7 @@ import { BoletoListComponent } from './boletos/boleto-list/boleto-list.component
 import { BoletosComponent } from './boletos/boletos.component';
 import { HeaderComponent } from './header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatDialogModule} from '@angular/material/dialog'
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,7 @@ import { MatDialogModule} from '@angular/material/dialog'
     HeaderComponent,
     BoletoListItemComponent,
     BoletoDetailComponent,
-    BoletoListComponent
+    BoletoListComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,9 +30,9 @@ import { MatDialogModule} from '@angular/material/dialog'
     HttpClientModule,
     NgxMaskModule.forRoot(),
     BrowserAnimationsModule,
-    MatDialogModule
+    MatDialogModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
