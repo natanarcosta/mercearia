@@ -14,6 +14,7 @@ import { BoletosService } from '../boletos.service';
 export class BoletoListComponent implements OnInit, OnDestroy{
   boletos: Boleto[] = [];
   boletoSub!: Subscription;
+  isLoading = false;
 
   //Is Ascending Sorting, usado para poder alterar entre ordem crescente e decrescente
   isAscSort = {
@@ -58,10 +59,12 @@ export class BoletoListComponent implements OnInit, OnDestroy{
   }
 
   requestBoletos(){
+    this.isLoading = true;
     this.boletosService.getAllBoletos().subscribe(
-      (boletos: Boleto[]) => {this.boletos = boletos}
+      (boletos: Boleto[]) => {this.boletos = boletos, this.isLoading = false;}
     );
   }
+
   openDialog(){
     this.matDialog.open(BoletoDetailComponent).afterClosed().subscribe(() => {this.requestBoletos()});
   }

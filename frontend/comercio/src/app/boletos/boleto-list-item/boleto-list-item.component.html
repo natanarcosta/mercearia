@@ -1,8 +1,8 @@
 <div class="card mb-3">
   <div class="card-body">
-    <h5 class="card-title">
+    <h1 class="card-title">
       {{boleto.empresa}}
-    </h5>
+    </h1>
      <span class="card-text">Data de Vencimento: {{boleto.vencimento | date: 'dd/MM' }} </span>
      <hr>
     <span class="card-text">Valor: {{boleto.valor | currency: 'BRL' }}</span>

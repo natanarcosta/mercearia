@@ -26,15 +26,20 @@
       <li><a class="dropdown-item" style="cursor: pointer;" (click)="onSortByValue()">Por Valor {{isAscSort.value ? '▲' : '▼'}}</a></li>
     </ul>
   </div>
-
-
     <hr>
+    <div class="text-center" *ngIf="isLoading">
+      <div class="spinner-border" role="status">
+        <span class="sr-only"></span>
+      </div>
+    </div>
     <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-3 row-cols-xl-3">
         <app-boleto-list-item
         *ngFor="let _boleto of boletos; let i = index"w
         [boleto]= '_boleto'></app-boleto-list-item>
     </div>
+
 </div>
+
 <!-- <nav aria-label="Page navigation example just">
   <ul class="pagination justify-content-center">
     <li class="page-item"><a class="page-link" href="#">Previous</a></li>
