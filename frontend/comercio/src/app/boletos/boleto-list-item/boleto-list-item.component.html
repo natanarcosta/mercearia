@@ -3,11 +3,12 @@
     <h1 class="card-title">
       {{boleto.empresa}}
     </h1>
-     <span class="card-text">Data de Vencimento: {{boleto.vencimento | date: 'dd/MM' }} </span>
+     <span class="card-text" [ngStyle]="{'color': isLate ? 'red' : 'black'}">Data de Vencimento: {{boleto.vencimento | date: 'dd/MM' }} </span>
      <hr>
     <span class="card-text">Valor: {{boleto.valor | currency: 'BRL' }}</span>
     <hr>
-     <span class="class-text">Situação: {{ boleto.pago ? 'Pago' : 'A vencer'}}</span>
+    <span class="class-text text-danger" *ngIf="isLate">Situação: Vencido!</span>
+    <span class="class-text" *ngIf="!isLate">Situação: {{ boleto.pago ? 'Pago' : 'A vencer'}}</span>
   </div>
   <div class="btn-group">
     <button class="btn btn-danger me-1" type="button" (click)="onDelete(boleto.id)"> Deletar </button>

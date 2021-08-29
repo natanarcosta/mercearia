@@ -15,12 +15,15 @@ export class BoletoListItemComponent implements OnInit {
   @Input() boleto!: Boleto;
   //Data de hoje usada para determinar no template se o boleto está vencido.
  today = new Date().getTime();
+isLate = false;
 
 
   constructor(private boletosService: BoletosService,
               private boletoDetController: BoletoDetailController) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isLate = this.evaluateDate();
+  }
 
   onPay(id: number){
     if(!this.boleto.pago){
@@ -46,9 +49,14 @@ export class BoletoListItemComponent implements OnInit {
       }
     })
   }
+
   openDialog(){
     this.boletoDetController.open(this.boleto.id).afterClosed().subscribe((boleto) => {
       this.boleto = boleto;
     });
+  }
+
+  evaluateDate(){
+    return this.today > (new Date(this.boleto.vencimento).getTime())
   }
 }
