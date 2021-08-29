@@ -18,12 +18,8 @@ export class BoletosController {
     }
 
     @Get('/:id')
-    async getBoletoById(@Param() id: number){
-        const boleto = await this.boletosService.getBoletoById(id);
-        if(!boleto){
-            throw new NotFoundException('Boleto não encontrado!');
-        }
-        return boleto;
+    getBoletoById(@Param() id: number){
+        return this.boletosService.getBoletoById(id);
     }
 
     @Post()

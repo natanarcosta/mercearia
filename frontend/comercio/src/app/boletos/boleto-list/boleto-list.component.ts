@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { BoletoDetailComponent } from '../boleto-detail/boleto-detail.component';
 import { Boleto } from '../boleto.model';
@@ -26,9 +26,10 @@ export class BoletoListComponent implements OnInit, OnDestroy{
   //showPaid = true;
   editMode = false;
 
-  constructor(private boletosService: BoletosService, private router: Router, private route: ActivatedRoute, private matDialog: MatDialog) { }
+  constructor(private boletosService: BoletosService, private route: ActivatedRoute, private matDialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.showPaid = true; //Trocando para true para mostrar o texto correto no botão mostrar/ocultar boletos pagos.
     this.boletoSub = this.boletosService.boletoChanged.subscribe(() => {this.requestBoletos()});
     //Se há o parametro /searched na url, retorna o item pesquisado.
     //TO-DO: Lidar com erros e resultados nulos

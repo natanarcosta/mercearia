@@ -9,4 +9,5 @@ export class BoletoDetailController{
   open(id?: number){
     return this.matDialog.open(BoletoDetailComponent, {data: {id}});
   }
+
 }

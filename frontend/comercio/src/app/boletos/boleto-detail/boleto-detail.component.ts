@@ -66,4 +66,7 @@ export class BoletoDetailComponent implements OnInit {
     //Passando o boleto para não quebrar o .afterclosed subscribe em outro componente
     this.matDialogRef.close(this.boleto);
   }
+  useBarCode(){
+    return;
+  }
 }

@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { ConsoleLogger, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { CreateBoletoDto } from "../dtos/create-boleto.dto";
@@ -25,17 +25,23 @@ export class BoletosService{
     }
 
     getAllIncPaid(){
-        return this.repoBoleto.find();
+        return this.repoBoleto.createQueryBuilder('boleto')
+        .orderBy('boleto.vencimento', 'ASC')
+        .getMany();
     }
 
-    getBoletoById(id: number){
-        return this.repoBoleto.findOne(id);
+    async getBoletoById(id: number){
+        const boleto = await this.repoBoleto.findOne(id);
+        if(!boleto){
+            throw new NotFoundException('Boleto não encontrado!');
+        }
+        return boleto;
     }
 
     async deleteBoleto(id: number){
         const boleto = await this.getBoletoById(id);
         if(!boleto){
-            throw new NotFoundException('Boleto não encontrado.');
+            throw new NotFoundException('Boleto não encontrado!');
         }
         return this.repoBoleto.remove(boleto);
     }
