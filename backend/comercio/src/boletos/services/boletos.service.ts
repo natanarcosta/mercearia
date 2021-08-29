@@ -19,6 +19,7 @@ export class BoletosService{
 
     getBoletos(){
         return this.repoBoleto.createQueryBuilder('boleto')
+        .where('boleto.pago = false')
         .orderBy('boleto.vencimento', 'ASC')
         .getMany();
     }

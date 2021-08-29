@@ -1,6 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, DoCheck, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { BoletoDetailComponent } from '../boleto-detail/boleto-detail.component';
 import { Boleto } from '../boleto.model';
 import { BoletosService } from '../boletos.service';
 
@@ -9,7 +11,7 @@ import { BoletosService } from '../boletos.service';
   templateUrl: './boleto-list.component.html',
   styleUrls: ['./boleto-list.component.css']
 })
-export class BoletoListComponent implements OnInit, OnDestroy {
+export class BoletoListComponent implements OnInit, OnDestroy{
   boletos: Boleto[] = [];
   boletoSub!: Subscription;
 
@@ -22,7 +24,7 @@ export class BoletoListComponent implements OnInit, OnDestroy {
   //showPaid = true;
   editMode = false;
 
-  constructor(private boletosService: BoletosService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private boletosService: BoletosService, private router: Router, private route: ActivatedRoute, private matDialog: MatDialog) { }
 
   ngOnInit(): void {
     this.boletoSub = this.boletosService.boletoChanged.subscribe();
@@ -33,29 +35,35 @@ export class BoletoListComponent implements OnInit, OnDestroy {
         let searchedTerm: string = this.route.snapshot.queryParams['searched']
         this.boletos = this.boletosService.search(this.boletos, searchedTerm);
       } else {
-        this.boletosService.getAllBoletos().subscribe(
-          (boletos: Boleto[]) => {
-            this.boletos = boletos;
-          }
-        )
+        this.requestBoletos();
       }
     });
-
     this.boletoSub = this.boletosService.boletoChanged.subscribe((boletos: Boleto[]) => {
     this.boletos = boletos;
     });
-
   }
+
   ngOnDestroy(){
     this.boletoSub.unsubscribe();
   }
+
   onSortByDate(){
     this.boletos = this.boletosService.orderByDate(this.boletos, this.isAscSort.date);
     this.isAscSort.date = !this.isAscSort.date;
   }
+
   onSortByValue(){
     this.boletos = this.boletosService.orderByValue(this.boletos, this.isAscSort.date);
     this.isAscSort.date = !this.isAscSort.date;
+  }
+
+  requestBoletos(){
+    this.boletosService.getAllBoletos().subscribe(
+      (boletos: Boleto[]) => {this.boletos = boletos}
+    );
+  }
+  openDialog(){
+    this.matDialog.open(BoletoDetailComponent).afterClosed().subscribe(() => {this.requestBoletos()});
   }
 
   /* togglePaid(){

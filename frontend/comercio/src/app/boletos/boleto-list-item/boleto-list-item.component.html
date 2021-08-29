@@ -3,7 +3,7 @@
     <h5 class="card-title">
       {{boleto.empresa}}
     </h5>
-     <span class="card-text" >Data de Vencimento: {{boleto.vencimento | date: 'dd/MM' }} </span>
+     <span class="card-text">Data de Vencimento: {{boleto.vencimento | date: 'dd/MM' }} </span>
      <hr>
     <span class="card-text">Valor: {{boleto.valor | currency: 'BRL' }}</span>
     <hr>
@@ -11,8 +11,8 @@
   </div>
   <div class="btn-group">
     <button class="btn btn-danger me-1" type="button" (click)="onDelete(boleto.id)"> Deletar </button>
-    <button class="btn btn-primary me-1"  routerLink='edit/{{boleto.id}}'>Editar</button>
-    <button class="btn" [ngClass]="{'btn-danger' : boleto.pago, 'btn-success' : !boleto.pago}" (click)="onPay(boleto.id)">{{ boleto.pago ? 'Pendente' : 'Pagar'}}</button>
+    <button class="btn btn-primary me-1"  (click)="openDialog()">Editar</button>
+    <button class="btn" [ngClass]="{'btn-danger' : boleto.pago, 'btn-success' : !boleto.pago}" (click)="onPay(boleto.id)">{{ boleto.pago ? 'Pendente' : 'Pago'}}</button>
   </div>
 </div>
 <router-outlet></router-outlet>

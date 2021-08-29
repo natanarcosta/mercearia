@@ -15,15 +15,14 @@
       </div>
       <hr>
         <div class="input-group form-floating">
-        <input type="number" class="form-control" formControlName="valor">
-        <label for="valor">Valor R$: </label>
+        <input class="form-control" formControlName="valor" mask="separator.2" thousandSeparator="." prefix="R$ ">
+        <label for="valor" >Valor R$: </label>
     </div>
     <span class="help-block" *ngIf="form.get('valor')?.errors?.pattern && form.get('valor')?.touched"> O valor precisa ser maior que 0!</span>
     <span class="help-block" *ngIf="form.get('valor')?.errors?.required && form.get('valor')?.touched"> Esse campo precisa ser preenchido!</span>
     <hr>
-     <button class="btn btn-success" type="submit" [disabled]="!form.valid">{{editMode ? 'Salvar' : 'Cadastrar'}}</button>
-     <span>|</span>
-    <button class="btn btn-danger" type="button" (click)="onCancel()">Cancelar</button>
+     <button class="btn btn-success me-1" type="submit" [disabled]="!form.valid">{{editMode ? 'Salvar' : 'Cadastrar'}}</button>
+      <button class="btn btn-danger" type="button" (click)="onCancel()">Cancelar</button>
     </form>
   </div>
 </div>

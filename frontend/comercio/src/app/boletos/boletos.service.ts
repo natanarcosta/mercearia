@@ -1,40 +1,38 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http'
-import { Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http'
+import { Observable, Subject } from 'rxjs';
 import { Boleto } from './boleto.model';
-import { map } from 'rxjs/operators'
+import { environment } from 'src/environments/environment';
+import {switchMap} from 'rxjs/operators'
 
+const {url} = environment;
 @Injectable({
   providedIn: 'root'
 })
 export class BoletosService {
   boletoChanged = new Subject<Boleto[]>();
-  url: string = 'http://localhost:3000/boletos/';
 
   constructor(private http: HttpClient) { }
 
-   getAllBoletos(){
-    return this.http.get<Boleto[]>(this.url);
+   getAllBoletos() : Observable<Boleto[]> {
+    return this.http.get<Boleto[]>(url);
   }
 
-  getBoletoById(id: number){
-    return this.http.get<Boleto>(this.url + id);
-  }
-
-  async getById(id: number) : Promise<Boleto>{
-    return await this.http.get<Boleto>(this.url + id).toPromise()
+  getBoletoById(id: number) : Observable<Boleto>{
+    return this.http.get<Boleto>(url + id);
   }
 
   createBoleto(boleto: Boleto){
-    this.http.post(this.url, boleto).subscribe();
+    //to-do mensagem de confirmação
+    return this.http.post(url, boleto);
   }
 
   deleteBoleto(id: number){
-    this.http.delete(this.url + id).subscribe();
+    this.http.delete(url + id).subscribe();
   }
 
   updateBoleto(id: number, boleto: Boleto){
-   return this.http.patch(this.url + id, boleto).subscribe();
+   return this.http.patch(url + id, boleto);
   }
 
   setToPaid(id: number){
