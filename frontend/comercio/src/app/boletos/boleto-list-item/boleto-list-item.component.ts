@@ -1,10 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { BoletoDetailController } from '../boleto-detail/boleto-detail.controller';
 import { Boleto } from '../boleto.model';
 import { BoletosService } from '../boletos.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-boleto-list-item',
@@ -15,8 +13,7 @@ export class BoletoListItemComponent implements OnInit {
   @Input() boleto!: Boleto;
   //Data de hoje usada para determinar no template se o boleto está vencido.
  today = new Date().getTime();
-isLate = false;
-
+ isLate = false;
 
   constructor(private boletosService: BoletosService,
               private boletoDetController: BoletoDetailController) { }
@@ -26,11 +23,8 @@ isLate = false;
   }
 
   onPay(id: number){
-    if(!this.boleto.pago){
-      this.boletosService.setToPaid(id);
-    } else {
-      this.boletosService.setToDue(id);
-    }
+    this.boleto.pago = !this.boleto.pago;
+    this.boletosService.updateBoleto(id, this.boleto).subscribe(() => {this.boletosService.boletoChanged.next()});
   }
 
   onDelete(id: number){
@@ -40,6 +34,7 @@ isLate = false;
         text: 'Esta ação não pode ser desfeita!',
         icon: 'warning',
         showCancelButton: true,
+        cancelButtonText:'Cancelar',
         confirmButtonText: 'Sim, deletar o boleto.',
         confirmButtonColor: 'red'
       }

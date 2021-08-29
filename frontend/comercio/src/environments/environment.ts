@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url: 'http://localhost:3000/boletos/'
+  url: 'http://192.168.10.3:3000/boletos/'
 };
 
 /*

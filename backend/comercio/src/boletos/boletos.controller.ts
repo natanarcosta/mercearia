@@ -12,6 +12,11 @@ export class BoletosController {
         return this.boletosService.getBoletos();
     }
 
+    @Get('/all')
+    getAllIncPaid(){
+        return this.boletosService.getAllIncPaid();
+    }
+
     @Get('/:id')
     async getBoletoById(@Param() id: number){
         const boleto = await this.boletosService.getBoletoById(id);

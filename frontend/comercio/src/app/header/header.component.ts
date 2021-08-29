@@ -16,6 +16,9 @@ export class HeaderComponent implements OnInit {
 
   onSearch(form: NgForm){
     let searchTerms = form.value.search;
+    if(!searchTerms){
+      return;
+    }
     this.searchForm.reset();
     this.router.navigate(['boletos'], {queryParams: { searched: searchTerms}})
   }

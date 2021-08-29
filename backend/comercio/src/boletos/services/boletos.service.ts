@@ -24,6 +24,10 @@ export class BoletosService{
         .getMany();
     }
 
+    getAllIncPaid(){
+        return this.repoBoleto.find();
+    }
+
     getBoletoById(id: number){
         return this.repoBoleto.findOne(id);
     }

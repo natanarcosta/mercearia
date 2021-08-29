@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http'
 import { Observable, Subject } from 'rxjs';
 import { Boleto } from './boleto.model';
 import { environment } from 'src/environments/environment';
-import {switchMap} from 'rxjs/operators'
 
 const {url} = environment;
 @Injectable({
@@ -16,6 +15,10 @@ export class BoletosService {
 
    getAllBoletos() : Observable<Boleto[]> {
     return this.http.get<Boleto[]>(url);
+  }
+
+  getAllIncPaid() : Observable<Boleto[]>{
+    return this.http.get<Boleto[]>(url+'all');
   }
 
   getBoletoById(id: number) : Observable<Boleto>{

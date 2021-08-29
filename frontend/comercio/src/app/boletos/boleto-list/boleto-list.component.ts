@@ -1,5 +1,5 @@
-import { Component, DoCheck, OnChanges, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { BoletoDetailComponent } from '../boleto-detail/boleto-detail.component';
@@ -15,6 +15,7 @@ export class BoletoListComponent implements OnInit, OnDestroy{
   boletos: Boleto[] = [];
   boletoSub!: Subscription;
   isLoading = false;
+  showPaid = false;
 
   //Is Ascending Sorting, usado para poder alterar entre ordem crescente e decrescente
   isAscSort = {
@@ -33,7 +34,7 @@ export class BoletoListComponent implements OnInit, OnDestroy{
     //TO-DO: Lidar com erros e resultados nulos
     this.route.queryParams.subscribe((params: Params) => {
       if(this.route.snapshot.queryParamMap.has('searched')) {
-        let searchedTerm: string = this.route.snapshot.queryParams['searched']
+        const searchedTerm: string = this.route.snapshot.queryParams['searched']
         this.boletos = this.boletosService.search(this.boletos, searchedTerm);
       } else {
         this.requestBoletos();
@@ -69,12 +70,18 @@ export class BoletoListComponent implements OnInit, OnDestroy{
     this.matDialog.open(BoletoDetailComponent).afterClosed().subscribe(() => {this.requestBoletos()});
   }
 
-  /* togglePaid(){
-    this.showPaid = !this.showPaid;
-    if(!this.showPaid){
-      this.boletos = this.boletosService.togglePaid(this.showPaid);
+  toggleShowPaid(){
+    if(this.showPaid){
+      this.isLoading = true;
+      this.boletosService.getAllIncPaid().subscribe(
+        (boletos: Boleto[]) => {this.boletos = boletos, this.isLoading = false}
+      );
     } else {
-      this.boletos = this.boletosService.getAllBoletos();
+      this.isLoading = true;
+      this.boletosService.getAllBoletos().subscribe(
+        (boletos: Boleto[]) => {this.boletos = boletos, this.isLoading = false}
+      );
     }
-  } */
+    this.showPaid = !this.showPaid;
+  }
 }
