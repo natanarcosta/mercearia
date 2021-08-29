@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { BoletoDetailComponent } from '../boleto-detail/boleto-detail.component';
 import { BoletoDetailController } from '../boleto-detail/boleto-detail.controller';
 import { Boleto } from '../boleto.model';
 import { BoletosService } from '../boletos.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-boleto-list-item',
@@ -13,15 +13,12 @@ import { BoletosService } from '../boletos.service';
 })
 export class BoletoListItemComponent implements OnInit {
   @Input() boleto!: Boleto;
-  @Input() index!: number;
   //Data de hoje usada para determinar no template se o boleto está vencido.
  today = new Date().getTime();
 
 
   constructor(private boletosService: BoletosService,
-    private router: Router,
-    private matDialog: MatDialog,
-    private boletoDetController: BoletoDetailController) { }
+              private boletoDetController: BoletoDetailController) { }
 
   ngOnInit(): void {}
 
@@ -34,8 +31,20 @@ export class BoletoListItemComponent implements OnInit {
   }
 
   onDelete(id: number){
-    this.boletosService.deleteBoleto(id);
-    this.router.navigate(['boletos']);
+    Swal.fire(
+      {
+        title: 'Tem certeza?',
+        text: 'Esta ação não pode ser desfeita!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sim, deletar o boleto.',
+        confirmButtonColor: 'red'
+      }
+    ).then((result) => {
+      if(result.isConfirmed){
+        this.boletosService.deleteBoleto(id);
+      }
+    })
   }
   openDialog(){
     this.boletoDetController.open(this.boleto.id).afterClosed().subscribe((boleto) => {
