@@ -27,7 +27,7 @@ export class BoletoListComponent implements OnInit, OnDestroy{
   constructor(private boletosService: BoletosService, private router: Router, private route: ActivatedRoute, private matDialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.boletoSub = this.boletosService.boletoChanged.subscribe();
+    this.boletoSub = this.boletosService.boletoChanged.subscribe(() => {this.requestBoletos()});
     //Se há o parametro /searched na url, retorna o item pesquisado.
     //TO-DO: Lidar com erros e resultados nulos
     this.route.queryParams.subscribe((params: Params) => {

@@ -28,7 +28,7 @@ export class BoletosService {
   }
 
   deleteBoleto(id: number){
-    this.http.delete(url + id).subscribe();
+    this.http.delete(url + id).subscribe(() => {this.boletoChanged.next()});
   }
 
   updateBoleto(id: number, boleto: Boleto){
