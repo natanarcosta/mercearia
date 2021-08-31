@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateBoletoDto } from '../dtos/create-boleto.dto';
-import { Boleto } from '../entities/boleto.entity';
+import { Boleto } from '../../shared/entities/boleto.entity';
 @Injectable()
 export class BoletosService {
   constructor(

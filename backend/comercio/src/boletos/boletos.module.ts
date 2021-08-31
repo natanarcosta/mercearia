@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Boleto } from './entities/boleto.entity';
+import { Boleto } from '../shared/entities/boleto.entity';
 import { BoletosController } from './boletos.controller';
 import { BoletosService } from './services/boletos.service';
 @Module({

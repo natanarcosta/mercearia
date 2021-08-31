@@ -8,7 +8,8 @@ const routes: Routes = [
   {path: 'boletos', component: BoletosComponent, children: [
     {path: 'edit/:id', component: BoletoDetailComponent},
     {path: 'new', component: BoletoDetailComponent}
-  ]}
+  ]},
+  {path: '**', redirectTo: '/boletos'}
 ];
 
 @NgModule({
