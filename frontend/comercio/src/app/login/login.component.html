@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-2">
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="username">Username: </label>
+          <input type="text" class="form-control" name="username" formControlName="username" />
+        </div>
+        <div class="form-group">
+          <label for="paswword">Password: </label>
+          <input type="password" class="form-control" name="password" formControlName="password" />
+        </div>
+        <span class="help-block text-danger">{{errorMessage}}</span>
+        <button class="btn btn-primary mt-1" type="submit">Cadastrar</button>
+      </form>
+    </div>
+  </div>
+</div>

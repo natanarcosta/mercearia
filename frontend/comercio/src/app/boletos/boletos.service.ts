@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
-import { Boleto } from './boleto.model';
+import { Boleto } from '../shared/models/boleto.model';
 import { environment } from 'src/environments/environment';
 
-const { url } = environment;
+const { boletosUrl } = environment;
 @Injectable({
   providedIn: 'root',
 })
@@ -14,30 +14,30 @@ export class BoletosService {
   constructor(private http: HttpClient) {}
 
   getAllBoletos(): Observable<Boleto[]> {
-    return this.http.get<Boleto[]>(url);
+    return this.http.get<Boleto[]>(boletosUrl);
   }
 
   getAllIncPaid(): Observable<Boleto[]> {
-    return this.http.get<Boleto[]>(url + 'all');
+    return this.http.get<Boleto[]>(boletosUrl + 'all');
   }
 
   getBoletoById(id: number): Observable<Boleto> {
-    return this.http.get<Boleto>(url + id);
+    return this.http.get<Boleto>(boletosUrl + id);
   }
 
   createBoleto(boleto: Boleto) {
     //to-do mensagem de confirmação
-    return this.http.post(url, boleto);
+    return this.http.post(boletosUrl, boleto);
   }
 
   deleteBoleto(id: number) {
-    this.http.delete(url + id).subscribe(() => {
+    this.http.delete(boletosUrl + id).subscribe(() => {
       this.boletoChanged.next();
     });
   }
 
   updateBoleto(id: number, boleto: Boleto) {
-    return this.http.patch(url + id, boleto);
+    return this.http.patch(boletosUrl + id, boleto);
   }
 
   setToPaid(id: number) {

@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ForbiddenException,
   Injectable,
   NotFoundException,
@@ -12,15 +13,16 @@ import { CreateUserDto } from './dtos/create-user.dto';
 export class UsersService {
   constructor(@InjectRepository(User) private userRepo: Repository<User>) {}
 
-  createUser(newUser: CreateUserDto) {
-    /*     if (this.userRepo.findOne(newUser.username)) {
-      throw new ForbiddenException('Username já em uso!');
-    } */
+  async createUser(newUser: CreateUserDto) {
+    if (await this.userRepo.findOne({ username: newUser.username })) {
+      throw new BadRequestException('Usuario já existe');
+    }
     const user = this.userRepo.create({
       username: newUser.username,
       password: newUser.password,
       admin: newUser.admin,
     });
+
     return this.userRepo.save(user);
   }
 
@@ -28,8 +30,8 @@ export class UsersService {
     return this.userRepo.find();
   }
 
-  findUserById(id: number) {
-    const user = this.userRepo.findOne(id);
+  async findUserById(id: number) {
+    const user = await this.userRepo.findOne(id);
     if (!user) {
       throw new NotFoundException('Usuário não encontrado!');
     }

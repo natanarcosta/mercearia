@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { BoletoDetailComponent } from '../boleto-detail/boleto-detail.component';
-import { Boleto } from '../boleto.model';
+import { Boleto } from '../../shared/models/boleto.model';
 import { BoletosService } from '../boletos.service';
 
 @Component({

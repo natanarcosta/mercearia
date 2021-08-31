@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { BoletoDetailController } from '../boleto-detail/boleto-detail.controller';
-import { Boleto } from '../boleto.model';
+import { Boleto } from '../../shared/models/boleto.model';
 import { BoletosService } from '../boletos.service';
 
 @Component({

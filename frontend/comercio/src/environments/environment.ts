@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  url: 'http://192.168.10.3:3000/boletos/'
+  boletosUrl: 'http://192.168.10.3:3000/boletos/',
+  usersUrl: 'http://192.168.10.3:3000/users/'
 };
 
 /*

@@ -12,6 +12,7 @@ import { BoletosComponent } from './boletos/boletos.component';
 import { HeaderComponent } from './header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     BoletoListItemComponent,
     BoletoDetailComponent,
     BoletoListComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
